@@ -2,25 +2,25 @@ import React from "react";
 import Item from "./components/Item";
 import Folder from "./components/Folder";
 import ItemSkeleton from "./components/skeletons/ItemSkeleton";
-import { IFolder } from "./redux/slices/folders/types";
 import CreateInput from "./components/CreateInput";
-import { useGetTasksQuery, useGetFoldersQuery } from "./redux/todosApi";
-import { IItem } from "./redux/slices/items/types";
+import {
+  useGetTasksQuery,
+  useGetFoldersQuery,
+  useGetFolderByIdQuery,
+} from "./redux/todosApi";
+import { useAppSelector } from "./redux/hooks";
+import { selectFolder } from "./redux/slices/folders/slice";
+import { IFolder, IItem } from "./components/types/types";
 
 const App: React.FC = () => {
-  const { data: todos, isLoading: todosLoading } = useGetTasksQuery("");
+  const { activefolder } = useAppSelector(selectFolder);
+
+  const { data: todos, isLoading: todosLoading } =
+    useGetTasksQuery(activefolder);
+
   const { data: folders, isLoading: foldersLoading } = useGetFoldersQuery("");
-  const mainFolder: IFolder = {
-    id: "0",
-    txt: "Все задачи",
-    color: "no",
-    content: ["all"],
-  };
-
-  React.useEffect(() => {
-    console.log([todos, folders]);
-  }, [todos, folders]);
-
+  const { data: folder } = useGetFolderByIdQuery(activefolder);
+  const activeFolderTxt = folder ? folder.txt : "";
   const todoList = () => {
     return todosLoading ? (
       <ItemSkeleton />
@@ -39,13 +39,11 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-row min-h-screen">
-      <div className="bg-[#F4F6F8]">
-        <Folder key={mainFolder.id} {...mainFolder} />
-        {folderList()}
-      </div>
-      <div className="w-full">
+      <div className="bg-[#F4F6F8]">{folderList()}</div>
+      <div className="w-full ">
+        <h4 className="m-14 text-4xl">{activeFolderTxt}</h4>
         {todoList()}
-        <CreateInput />
+        {activefolder === "0" ? <></> : <CreateInput />}
       </div>
     </div>
   );

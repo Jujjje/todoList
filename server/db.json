@@ -1,0 +1,68 @@
+{
+  "tasks": [
+    {
+      "txt": "12312",
+      "isDone": true,
+      "id": "YJHpPEd",
+      "folderId": "1"
+    },
+    {
+      "txt": "1asdsadasdasdasdasdasd",
+      "isDone": true,
+      "id": "zhQmhxD",
+      "folderId": "2"
+    },
+    {
+      "txt": "123",
+      "isDone": true,
+      "id": "aexWxNu",
+      "folderId": "3"
+    },
+    {
+      "txt": "123",
+      "isDone": false,
+      "folderId": "0",
+      "id": "zocyyYO"
+    },
+    {
+      "txt": "123",
+      "isDone": true,
+      "folderId": "1",
+      "id": "HPS2rg0"
+    },
+    {
+      "txt": "123",
+      "isDone": false,
+      "folderId": "0",
+      "id": "ZrEmkIh"
+    },
+    {
+      "txt": "123123",
+      "isDone": false,
+      "folderId": "3",
+      "id": "WQZTQoo"
+    }
+  ],
+  "folders": [
+    {
+      "id": "0",
+      "txt": "Все задачи",
+      "color": "no"
+    },
+    {
+      "txt": "ad",
+      "color": "#7d1bed",
+      "id": "1"
+    },
+    {
+      "txt": "illum",
+      "color": "#315bcc",
+      "id": "2"
+    },
+    {
+      "txt": "magni",
+      "color": "#a1a15e",
+      "id": "3"
+    }
+  ]
+}

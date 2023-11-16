@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
     "axios": "^1.6.0",
+    "cors": "^2.8.5",
     "react": "^18.2.0",
     "react-content-loader": "^6.2.1",
     "react-dom": "^18.2.0",
@@ -19,6 +20,7 @@
     "vite-plugin-react-svg": "^0.2.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.2.0",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
@@ -29,6 +31,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "file-loader": "^6.2.0",
+    "json-server": "^0.17.4",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5",
     "typescript": "^5.0.2",

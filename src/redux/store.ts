@@ -1,12 +1,10 @@
 import folderSlice from "./slices/folders/slice";
-import itemsSlice from "./slices/items/slice";
 import { configureStore } from "@reduxjs/toolkit";
 import { todosApi } from "./todosApi";
 
 const store = configureStore({
   reducer: {
     [todosApi.reducerPath]: todosApi.reducer,
-    items: itemsSlice,
     folders: folderSlice,
   },
   middleware: (getDefaultMiddleware) =>

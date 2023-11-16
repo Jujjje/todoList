@@ -4,11 +4,12 @@ export const todosApi = createApi({
   reducerPath: "todosApi",
   tagTypes: ["Tasks", "Folders"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://6532868fd80bd20280f5b584.mockapi.io",
+    baseUrl: "http://localhost:3000",
   }),
   endpoints: (builder) => ({
     getTasks: builder.query({
-      query: () => `tasks`,
+      query: (folderId) =>
+        `tasks?${folderId === "0" ? "" : `folderId=${folderId}`}`,
       providesTags: (result) =>
         result
           ? [
@@ -22,6 +23,19 @@ export const todosApi = createApi({
     }),
     getFolders: builder.query({
       query: () => `folders`,
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }: { id: string }) => ({
+                type: "Folder" as const,
+                id,
+              })),
+              { type: "Folder", id: "Folder" },
+            ]
+          : [{ type: "Folders", id: "Folder" }],
+    }),
+    getFolderById: builder.query({
+      query: (id) => `folders/${id}`,
     }),
     updItems: builder.mutation({
       query: (body) => ({
@@ -31,8 +45,29 @@ export const todosApi = createApi({
       }),
       invalidatesTags: [{ type: "Tasks", id: "LIST" }],
     }),
+    delTask: builder.mutation({
+      query: (id) => ({
+        url: `tasks/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Tasks", id: "LIST" }],
+    }),
+    editTask: builder.mutation({
+      query: ({ id, ...patch }) => ({
+        url: `tasks/${id}`,
+        method: "PATCH",
+        body: patch,
+      }),
+      invalidatesTags: [{ type: "Tasks", id: "LIST" }],
+    }),
   }),
 });
 
-export const { useGetTasksQuery, useGetFoldersQuery, useUpdItemsMutation } =
-  todosApi;
+export const {
+  useGetTasksQuery,
+  useGetFoldersQuery,
+  useUpdItemsMutation,
+  useDelTaskMutation,
+  useEditTaskMutation,
+  useGetFolderByIdQuery,
+} = todosApi;

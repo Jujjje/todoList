@@ -1,12 +1,15 @@
 import React from "react";
 import { useUpdItemsMutation } from "../redux/todosApi";
+import { selectFolder } from "../redux/slices/folders/slice";
+import { useAppSelector } from "../redux/hooks";
 
 const CreateInput: React.FC = () => {
+  const { activefolder } = useAppSelector(selectFolder);
   const [addTask] = useUpdItemsMutation();
   const [isActiveForm, setIsActiveForm] = React.useState(true);
   const [value, setValue] = React.useState("");
   const handleSubmit = async (newTask: string) => {
-    await addTask({ txt: newTask, isDone: false });
+    await addTask({ txt: newTask, isDone: false, folderId: activefolder });
   };
 
   return (

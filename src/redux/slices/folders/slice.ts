@@ -1,39 +1,21 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import { IFolder, IInitialState } from "./types";
+import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../../store";
 
-export const fetchFolders = createAsyncThunk(
-  "folders/fetchFolders",
-  async () => {
-    const res = await axios.get(
-      "https://6532868fd80bd20280f5b584.mockapi.io/folders"
-    );
-    return res.data as IFolder[];
-  }
-);
-const initialState: IInitialState = {
-  folders: [],
-  folderLoadingStatus: true,
+const initialState = {
+  activefolder: "0",
 };
 
-export const folderSlice = createSlice({
-  name: "folder",
+export const foldersSlice = createSlice({
+  name: "folders",
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchFolders.pending, (state) => {
-        state.folderLoadingStatus = true;
-      })
-      .addCase(fetchFolders.fulfilled, (state, action) => {
-        state.folderLoadingStatus = false;
-        state.folders = action.payload;
-      })
-      .addCase(fetchFolders.rejected, (state) => {
-        state.folders = [];
-        state.folderLoadingStatus = true;
-      });
+  reducers: {
+    setActive: (state, action) => {
+      state.activefolder = action.payload;
+    },
   },
 });
+export const { setActive } = foldersSlice.actions;
 
-export default folderSlice.reducer;
+export const selectFolder = (state: RootState) => state.folders;
+
+export default foldersSlice.reducer;

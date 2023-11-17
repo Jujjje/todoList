@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 
 export const todosApi = createApi({
   reducerPath: "todosApi",
@@ -13,26 +13,26 @@ export const todosApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }: { id: string }) => ({
+              ...result.map(({id}: {id: string}) => ({
                 type: "Tasks" as const,
                 id,
               })),
-              { type: "Tasks", id: "LIST" },
+              {type: "Tasks", id: "LIST"},
             ]
-          : [{ type: "Tasks", id: "LIST" }],
+          : [{type: "Tasks", id: "LIST"}],
     }),
     getFolders: builder.query({
       query: () => `folders`,
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }: { id: string }) => ({
+              ...result.map(({id}: {id: string}) => ({
                 type: "Folder" as const,
                 id,
               })),
-              { type: "Folder", id: "Folder" },
+              {type: "Folder", id: "Folder"},
             ]
-          : [{ type: "Folders", id: "Folder" }],
+          : [{type: "Folders", id: "Folder"}],
     }),
     getFolderById: builder.query({
       query: (id) => `folders/${id}`,
@@ -43,22 +43,30 @@ export const todosApi = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: [{ type: "Tasks", id: "LIST" }],
+      invalidatesTags: [{type: "Tasks", id: "LIST"}],
+    }),
+    updFolders: builder.mutation({
+      query: (body) => ({
+        url: "folders",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{type: "Folders", id: "Folder"}],
     }),
     delTask: builder.mutation({
       query: (id) => ({
         url: `tasks/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [{ type: "Tasks", id: "LIST" }],
+      invalidatesTags: [{type: "Tasks", id: "LIST"}],
     }),
     editTask: builder.mutation({
-      query: ({ id, ...patch }) => ({
+      query: ({id, ...patch}) => ({
         url: `tasks/${id}`,
         method: "PATCH",
         body: patch,
       }),
-      invalidatesTags: [{ type: "Tasks", id: "LIST" }],
+      invalidatesTags: [{type: "Tasks", id: "LIST"}],
     }),
   }),
 });

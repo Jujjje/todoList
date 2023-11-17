@@ -27,10 +27,10 @@ export const todosApi = createApi({
         result
           ? [
               ...result.map(({id}: {id: string}) => ({
-                type: "Folder" as const,
+                type: "Folders" as const,
                 id,
               })),
-              {type: "Folder", id: "Folder"},
+              {type: "Folders", id: "Folder"},
             ]
           : [{type: "Folders", id: "Folder"}],
     }),
@@ -50,6 +50,13 @@ export const todosApi = createApi({
         url: "folders",
         method: "POST",
         body,
+      }),
+      invalidatesTags: [{type: "Folders", id: "Folder"}],
+    }),
+    delFolder: builder.mutation({
+      query: (id) => ({
+        url: `folders/${id}`,
+        method: "DELETE",
       }),
       invalidatesTags: [{type: "Folders", id: "Folder"}],
     }),
@@ -78,4 +85,6 @@ export const {
   useDelTaskMutation,
   useEditTaskMutation,
   useGetFolderByIdQuery,
+  useDelFolderMutation,
+  useUpdFoldersMutation,
 } = todosApi;

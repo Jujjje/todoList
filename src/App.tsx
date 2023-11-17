@@ -11,6 +11,7 @@ import {
 import {useAppSelector} from "./redux/hooks";
 import {selectFolder} from "./redux/slices/folders/slice";
 import {IFolder, IItem} from "./components/types/types";
+import CreateFolder from "./components/CreateFolder";
 
 const App: React.FC = () => {
   const {activefolder} = useAppSelector(selectFolder);
@@ -38,8 +39,11 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-row min-h-screen">
-      <div className="bg-[#F4F6F8]">{folderList()}</div>
+    <div className="flex flex-row min-h-screen relative">
+      <div className="bg-[#F4F6F8]">
+        {folderList()}
+        <CreateFolder />
+      </div>
       <div className="w-full ">
         <h4 className="m-14 text-4xl">{activeFolderParams.txt}</h4>
         {todoList()}

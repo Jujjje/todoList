@@ -1,6 +1,12 @@
-import React, { CSSProperties } from "react";
-import { selectFolder, setActive } from "../redux/slices/folders/slice";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import React, {CSSProperties} from "react";
+import {selectFolder, setActive} from "../redux/slices/folders/slice";
+import {useAppDispatch, useAppSelector} from "../redux/hooks";
+import {
+  useDelFolderMutation,
+  useDelTaskMutation,
+  useGetTasksQuery,
+} from "../redux/todosApi";
+import {IItem} from "./types/types";
 interface IFolder {
   txt: string;
   id: string;
@@ -8,16 +14,23 @@ interface IFolder {
   content: string[];
 }
 
-const Folder: React.FC<IFolder> = ({ id, txt, color }) => {
-  const { activefolder } = useAppSelector(selectFolder);
+const Folder: React.FC<IFolder> = ({id, txt, color}) => {
+  const {activefolder} = useAppSelector(selectFolder);
   const dispatch = useAppDispatch();
+  const [delFolder] = useDelFolderMutation();
+  const [delTask] = useDelTaskMutation();
+  const {data: todos} = useGetTasksQuery(activefolder);
+  const handleFolder = () => {
+    todos.map((i: IItem) => delTask(i.id));
+    delFolder(activefolder);
+  };
   return (
     <div
       onClick={() => dispatch(setActive(id))}
       className={
         activefolder === id
-          ? "w-40 h-10 m-5 pl-3 flex flex-row items-center relative shadow-md bg-white rounded-[4px]"
-          : "w-40 h-10 m-5 pl-3 flex flex-row items-center relative"
+          ? "w-52 h-10 m-5 pl-3 flex flex-row items-center relative shadow-md bg-white rounded-[4px]"
+          : "w-52 h-10 m-5 pl-3 flex flex-row items-center relative"
       }
     >
       {color === "no" ? (
@@ -37,11 +50,30 @@ const Folder: React.FC<IFolder> = ({ id, txt, color }) => {
       ) : (
         <div
           className="bg-[var(--color)] w-3 h-3 mr-3 rounded-full"
-          style={{ "--color": color } as CSSProperties}
+          style={{"--color": color} as CSSProperties}
         ></div>
       )}
 
       <p className="font-bold">{txt}</p>
+      {activefolder === id && activefolder !== "0" ? (
+        <svg
+          onClick={() => handleFolder()}
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1}
+          stroke="currentColor"
+          className="w-6 h-6 absolute right-1"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

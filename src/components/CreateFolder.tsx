@@ -1,5 +1,6 @@
 import React from "react";
 import {useUpdFoldersMutation} from "../redux/todosApi";
+import plus from "../assets/svgs/plus.svg";
 
 const CreateFolder = () => {
   const [isEdit, setisEdit] = React.useState(false);
@@ -14,7 +15,7 @@ const CreateFolder = () => {
     setisEdit(!isEdit);
   };
   return (
-    <div className="absolute m-5 pl-3 ">
+    <div className="absolute m-5">
       {isEdit ? (
         <div className="flex flex-col bg-white p-4 shadow-md rounded-[10px] z-50">
           <input
@@ -48,32 +49,9 @@ const CreateFolder = () => {
           </svg>
         </div>
       ) : (
-        <div className="flex items-center">
-          <p>Создать папку</p>
-          <svg
-            onClick={() => setisEdit(!isEdit)}
-            className="m-4"
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-          >
-            <path
-              d="M8 1V15"
-              stroke="#B4B4B4"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M1 8H15"
-              stroke="#B4B4B4"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+        <div className="flex items-center" onClick={() => setisEdit(!isEdit)}>
+          <img src={plus} className="m-4 w-3 h-3" />
+          <p className="font-semibold">Создать папку</p>
         </div>
       )}
     </div>

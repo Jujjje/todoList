@@ -19,9 +19,11 @@ const App: React.FC = () => {
   const {data: todos, isLoading: todosLoading} = useGetTasksQuery(activefolder);
   const {data: folders, isLoading: foldersLoading} = useGetFoldersQuery("");
   const {data: folder} = useGetFolderByIdQuery(activefolder);
-  const activeFolderParams = folder
-    ? {txt: folder.txt as string, color: folder.color as string}
-    : "";
+  const activeFolderParams = {
+    txt: folder?.txt as string,
+    color: folder?.color as string,
+  };
+
   const todoList = () => {
     return todosLoading ? (
       <ItemSkeleton />

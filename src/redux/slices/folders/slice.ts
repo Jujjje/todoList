@@ -1,20 +1,23 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../store";
+import {PayloadAction, createSlice} from "@reduxjs/toolkit";
+import {RootState} from "../../store";
+interface IinitialState {
+  activeFolder: string;
+}
 
-const initialState = {
-  activefolder: "0",
+const initialState: IinitialState = {
+  activeFolder: "0",
 };
 
 export const foldersSlice = createSlice({
   name: "folders",
   initialState,
   reducers: {
-    setActive: (state, action) => {
-      state.activefolder = action.payload;
+    setActive: (state, action: PayloadAction<string>) => {
+      state.activeFolder = action.payload;
     },
   },
 });
-export const { setActive } = foldersSlice.actions;
+export const {setActive} = foldersSlice.actions;
 
 export const selectFolder = (state: RootState) => state.folders;
 

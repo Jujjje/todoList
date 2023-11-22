@@ -3,13 +3,13 @@ import {useUpdItemsMutation} from "../redux/todosApi";
 import {selectFolder} from "../redux/slices/folders/slice";
 import {useAppSelector} from "../redux/hooks";
 
-const CreateInput: React.FC = () => {
-  const {activefolder} = useAppSelector(selectFolder);
+const TaskCreator: React.FC = () => {
+  const {activeFolder} = useAppSelector(selectFolder);
   const [addTask] = useUpdItemsMutation();
   const [isActiveForm, setIsActiveForm] = React.useState(true);
   const [value, setValue] = React.useState("");
   const handleSubmit = async (newTask: string) => {
-    await addTask({txt: newTask, isDone: false, folderId: activefolder});
+    await addTask({txt: newTask, isDone: false, folderId: activeFolder});
   };
 
   return (
@@ -76,4 +76,4 @@ const CreateInput: React.FC = () => {
   );
 };
 
-export default CreateInput;
+export default TaskCreator;

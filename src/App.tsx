@@ -2,7 +2,7 @@ import React from "react";
 import Item from "./components/Item";
 import Folder from "./components/Folder";
 import ItemSkeleton from "./components/skeletons/ItemSkeleton";
-import CreateInput from "./components/CreateInput";
+import TaskCreator from "./components/TaskCreator";
 import {
   useGetTasksQuery,
   useGetFoldersQuery,
@@ -11,14 +11,14 @@ import {
 import {useAppSelector} from "./redux/hooks";
 import {selectFolder} from "./redux/slices/folders/slice";
 import {IFolder, IItem} from "./components/types/types";
-import CreateFolder from "./components/CreateFolder";
+import FolderCreator from "./components/FolderCreator";
 
 const App: React.FC = () => {
-  const {activefolder} = useAppSelector(selectFolder);
+  const {activeFolder} = useAppSelector(selectFolder);
 
-  const {data: todos, isLoading: todosLoading} = useGetTasksQuery(activefolder);
+  const {data: todos, isLoading: todosLoading} = useGetTasksQuery(activeFolder);
   const {data: folders, isLoading: foldersLoading} = useGetFoldersQuery("");
-  const {data: folder} = useGetFolderByIdQuery(activefolder);
+  const {data: folder} = useGetFolderByIdQuery(activeFolder);
   const activeFolderParams = {
     txt: folder?.txt as string,
     color: folder?.color as string,
@@ -44,12 +44,12 @@ const App: React.FC = () => {
     <div className="flex flex-row min-h-screen relative">
       <div className="bg-[#F4F6F8]">
         {folderList()}
-        <CreateFolder />
+        <FolderCreator />
       </div>
       <div className="w-full ">
         <h4 className="m-14 text-4xl">{activeFolderParams.txt}</h4>
         {todoList()}
-        {activefolder === "0" ? <></> : <CreateInput />}
+        {activeFolder === "0" ? <></> : <TaskCreator />}
       </div>
     </div>
   );

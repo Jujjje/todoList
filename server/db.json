@@ -2,7 +2,7 @@
   "tasks": [
     {
       "txt": "5879o69708-9=0",
-      "isDone": false,
+      "isDone": true,
       "folderId": "FuMYJOo",
       "id": 1
     },
@@ -14,19 +14,19 @@
     },
     {
       "txt": "5879o69708-9=0",
-      "isDone": false,
+      "isDone": true,
       "folderId": "FuMYJOo",
       "id": 3
     },
     {
       "txt": "5879o69708-9=0",
-      "isDone": false,
+      "isDone": true,
       "folderId": "FuMYJOo",
       "id": 4
     },
     {
       "txt": "5879o69708-9=0",
-      "isDone": false,
+      "isDone": true,
       "folderId": "FuMYJOo",
       "id": 5
     }
@@ -51,6 +51,11 @@
       "txt": "DAFASDFASDFASDFSDFDADSADSFASDFSADFASDF123214",
       "color": "#f43caa",
       "id": "dyfhp9_"
+    },
+    {
+      "txt": "asdasd",
+      "color": "#ba0efa",
+      "id": "vCvh-oK"
     }
   ]
 }

@@ -7,30 +7,24 @@ import {
   useGetTasksQuery,
 } from "../redux/todosApi";
 import allTasks from "../assets/svgs/allTasks.svg";
-import xCircle from "../assets/svgs/xCircle.svg";
-import {IItem} from "./types/types";
-interface IFolder {
-  txt: string;
-  id: string;
-  color: string;
-  content: string[];
-}
+import x from "../assets/svgs/x.svg";
+import {IFolder, IItem} from "./types/types";
 
 const Folder: React.FC<IFolder> = ({id, txt, color}) => {
-  const {activefolder} = useAppSelector(selectFolder);
+  const {activeFolder} = useAppSelector(selectFolder);
   const dispatch = useAppDispatch();
   const [delFolder] = useDelFolderMutation();
   const [delTask] = useDelTaskMutation();
-  const {data: todos} = useGetTasksQuery(activefolder);
+  const {data: todos} = useGetTasksQuery(activeFolder);
   const handleFolder = () => {
     todos.map((i: IItem) => delTask(i.id));
-    delFolder(activefolder);
+    delFolder(activeFolder);
   };
   return (
     <div
       onClick={() => dispatch(setActive(id))}
       className={
-        activefolder === id
+        activeFolder === id
           ? "w-52 h-10 m-5 pl-3 flex flex-row items-center relative shadow-md bg-white rounded-[4px]"
           : "w-52 h-10 m-5 pl-3 flex flex-row items-center relative"
       }
@@ -45,9 +39,9 @@ const Folder: React.FC<IFolder> = ({id, txt, color}) => {
       )}
 
       <p className="font-bold truncate w-[9rem]">{txt}</p>
-      {activefolder === id && activefolder !== "0" ? (
+      {activeFolder === id && activeFolder !== "0" ? (
         <img
-          src={xCircle}
+          src={x}
           className="w-6 h-6 absolute right-1"
           onClick={() => handleFolder()}
         />

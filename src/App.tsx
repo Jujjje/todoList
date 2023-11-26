@@ -3,40 +3,37 @@ import Item from "./components/Item";
 import Folder from "./components/Folder";
 import ItemSkeleton from "./components/skeletons/ItemSkeleton";
 import TaskCreator from "./components/TaskCreator";
-import {
-  useGetTasksQuery,
-  useGetFoldersQuery,
-  useGetFolderByIdQuery,
-} from "./redux/todosApi";
 import {useAppSelector} from "./redux/hooks";
 import {selectFolder} from "./redux/slices/folders/slice";
 import {IFolder, IItem} from "./components/types/types";
 import FolderCreator from "./components/FolderCreator";
+import {useTasks} from "./hooks/useTasks";
+import {useFolders, useFoldersById} from "./hooks/useFolders";
 
 const App: React.FC = () => {
   const {activeFolder} = useAppSelector(selectFolder);
-
-  const {data: todos, isLoading: todosLoading} = useGetTasksQuery(activeFolder);
-  const {data: folders, isLoading: foldersLoading} = useGetFoldersQuery("");
-  const {data: folder} = useGetFolderByIdQuery(activeFolder);
+  const {isLoading: todosLoading, data: todos} = useTasks(activeFolder);
+  const {data: folders, isLoading: foldersLoading} = useFolders();
+  const {data: folder} = useFoldersById(activeFolder);
   const activeFolderParams = {
-    txt: folder?.txt as string,
-    color: folder?.color as string,
+    txt: folder?.data.txt as string,
+    color: folder?.data.color as string,
   };
 
   const todoList = () => {
     return todosLoading ? (
       <ItemSkeleton />
     ) : (
-      todos.map((i: IItem) => <Item key={i.id} {...i} />)
+      todos?.data.map((i: IItem) => <Item key={i.id} {...i} />)
     );
   };
+  console.log(activeFolder);
 
   const folderList = () => {
     return foldersLoading ? (
       <ItemSkeleton />
     ) : (
-      folders.map((i: IFolder) => <Folder key={i.id} {...i} />)
+      folders?.data.map((i: IFolder) => <Folder key={i.id} {...i} />)
     );
   };
 

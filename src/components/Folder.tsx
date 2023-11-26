@@ -1,25 +1,26 @@
 import React, {CSSProperties} from "react";
 import {selectFolder, setActive} from "../redux/slices/folders/slice";
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
-import {
-  useDelFolderMutation,
-  useDelTaskMutation,
-  useGetTasksQuery,
-} from "../redux/todosApi";
+import {useDelFolderMutation, useDelTaskMutation} from "../redux/todosApi";
 import allTasks from "../assets/svgs/allTasks.svg";
 import x from "../assets/svgs/x.svg";
 import {IFolder, IItem} from "./types/types";
+import {useTasks} from "../hooks/useTasks";
 
 const Folder: React.FC<IFolder> = ({id, txt, color}) => {
   const {activeFolder} = useAppSelector(selectFolder);
   const dispatch = useAppDispatch();
   const [delFolder] = useDelFolderMutation();
   const [delTask] = useDelTaskMutation();
-  const {data: todos} = useGetTasksQuery(activeFolder);
-  const handleFolder = () => {
-    todos.map((i: IItem) => delTask(i.id));
+  const {data: todos} = useTasks(activeFolder);
+  const handleDel = () => {
+    todos?.data.map((i: IItem) => delTask(i.id));
     delFolder(activeFolder);
   };
+  function handleFolder(): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <div
       onClick={() => dispatch(setActive(id))}
@@ -43,7 +44,7 @@ const Folder: React.FC<IFolder> = ({id, txt, color}) => {
         <img
           src={x}
           className="w-6 h-6 absolute right-1"
-          onClick={() => handleFolder()}
+          onClick={() => handleDel()}
         />
       ) : (
         <></>

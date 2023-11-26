@@ -63,8 +63,12 @@ const Item: React.FC<IItem> = ({id, txt, isDone}) => {
       )}
 
       <div className={isItemHover ? "flex absolute right-0" : "hidden"}>
-        <img src={pen} onClick={() => setIsEdit(!isEdit)} />
-        <img src={x} onClick={() => handleDel(id)} />
+        <img
+          src={pen}
+          className="w-6 h-6 mr-2"
+          onClick={() => setIsEdit(!isEdit)}
+        />
+        <img src={x} className="w-6 h-6" onClick={() => handleDel(id)} />
       </div>
     </div>
   );
